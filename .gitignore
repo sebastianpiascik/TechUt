@@ -1,4 +1,4 @@
 .*
 !/.gitignore
+*.iml
 out/
-zad01/zad01.iml
