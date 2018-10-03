@@ -1,4 +1,4 @@
 # TechUt
-Technologie utrwalania
+Technologie utrwalania dla języka Java
 
 # Sebastian Piaścik
