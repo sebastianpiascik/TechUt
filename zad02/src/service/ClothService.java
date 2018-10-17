@@ -62,21 +62,8 @@ public class ClothService {
         }
     }
 
-    public int addCloth(Cloth cloth) {
-        int count = 0;
-        try {
-            addClothStmt.setString(1, cloth.getName());
-            addClothStmt.setString(2, cloth.getType());
-            addClothStmt.setString(3, cloth.getColor());
-            addClothStmt.setString(4, cloth.getFabric());
-            addClothStmt.setString(5, cloth.getProducer());
+    public void addCloth(Cloth cloth) {
 
-            count = addClothStmt.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return count;
     }
 
     public List<Cloth> getAllClothes() {
@@ -102,36 +89,11 @@ public class ClothService {
         return persons;
     }
 
-    public void addAllCloth(List<Cloth> clothes) {
-
-        try {
-            connection.setAutoCommit(false);
-            for (Cloth cloth : clothes) {
-                addClothStmt.setString(1, cloth.getName());
-                addClothStmt.setString(2, cloth.getType());
-                addClothStmt.setString(3, cloth.getColor());
-                addClothStmt.setString(4, cloth.getFabric());
-                addClothStmt.setString(5, cloth.getProducer());
-                addClothStmt.executeUpdate();
-            }
-            connection.commit();
-
-        } catch (SQLException exception) {
-
-            try {
-                connection.rollback();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-
-    }
-
-
-
     public static void main(String[] args) throws SQLException {
 
         ClothService clothService = new ClothService();
+
+        clothService.getAllClothes();
 
     }
 }
