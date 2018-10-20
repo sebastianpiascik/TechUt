@@ -51,8 +51,33 @@ public class ClothService {
         return connection;
     }
 
+<<<<<<< HEAD
     public void addCloth(Cloth cloth) {
+=======
+    void clearClothes() {
+        try {
+            deleteAllClothesStmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
+    public int addCloth(Cloth cloth) {
+        int count = 0;
+        try {
+            addClothStmt.setString(1, cloth.getName());
+            addClothStmt.setString(2, cloth.getType());
+            addClothStmt.setString(3, cloth.getColor());
+            addClothStmt.setString(4, cloth.getFabric());
+            addClothStmt.setString(5, cloth.getProducer());
+
+            count = addClothStmt.executeUpdate();
+>>>>>>> parent of 88ed625... fix err
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return count;
     }
 
     public void showAllClothes() throws SQLException{
@@ -72,10 +97,40 @@ public class ClothService {
         }
     }
 
+    public void addAllCloth(List<Cloth> clothes) {
+
+        try {
+            connection.setAutoCommit(false);
+            for (Cloth cloth : clothes) {
+                addClothStmt.setString(1, cloth.getName());
+                addClothStmt.setString(2, cloth.getType());
+                addClothStmt.setString(3, cloth.getColor());
+                addClothStmt.setString(4, cloth.getFabric());
+                addClothStmt.setString(5, cloth.getProducer());
+                addClothStmt.executeUpdate();
+            }
+            connection.commit();
+
+        } catch (SQLException exception) {
+
+            try {
+                connection.rollback();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+
+
     public static void main(String[] args) throws SQLException {
 
         ClothService clothService = new ClothService();
+<<<<<<< HEAD
         clothService.showAllClothes();
+=======
+>>>>>>> parent of 88ed625... fix err
 
     }
 }
