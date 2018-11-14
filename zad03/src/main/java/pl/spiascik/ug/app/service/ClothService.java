@@ -7,6 +7,7 @@ import java.util.List;
 public interface ClothService {
 
     public void addCloth(Cloth cloth) throws SQLException;
+    public void removeCloth(String name) throws SQLException;
     public List<Cloth> getListOfClothes() throws SQLException;
     public void showAllClothes() throws SQLException;
     public void showAllHoodies() throws SQLException;

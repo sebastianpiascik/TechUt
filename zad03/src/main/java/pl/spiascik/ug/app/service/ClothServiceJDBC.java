@@ -60,7 +60,19 @@ public class ClothServiceJDBC implements ClothService {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
 
+    @Override
+    public void removeCloth(String name) throws SQLException {
+
+        try {
+            String sql = "DELETE FROM Cloth " +
+                    "WHERE name='"+name+"'";
+//            System.out.println(sql);
+            statement.executeUpdate(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

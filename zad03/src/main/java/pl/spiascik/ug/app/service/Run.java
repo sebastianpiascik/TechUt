@@ -39,7 +39,16 @@ public class Run {
         clothService.showAllHoodies();
         System.out.println("\n");
 
+        System.out.println("Usuwam T03");
+        clothService.removeCloth("T03");
+        System.out.println("\n");
+
+        // Show all clothes
+        System.out.println("Lista ubrań:");
+        clothService.showAllClothes();
+        System.out.println("\n");
+
         //Search for clothes from company
-        clothService.searchCompany("Company 3");
+        clothService.searchCompany("Company 4");
     }
 }
