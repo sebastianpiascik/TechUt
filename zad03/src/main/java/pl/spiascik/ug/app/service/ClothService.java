@@ -10,9 +10,9 @@ public interface ClothService {
     public void removeCloth(String name) throws SQLException;
     public List<Cloth> getListOfClothes() throws SQLException;
     public void showAllClothes() throws SQLException;
-    public void showAllHoodies() throws SQLException;
+    public void showAllWaterproof() throws SQLException;
     public boolean addAllClothes(List<Cloth> clothes);
-    public void searchCompany(String companyName) throws SQLException;
+    public void searchName(String name) throws SQLException;
 
 
 }

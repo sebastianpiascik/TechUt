@@ -4,6 +4,7 @@ import pl.spiascik.ug.app.domain.Cloth;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Run {
@@ -13,10 +14,10 @@ public class Run {
         ClothServiceJDBC clothService = new ClothServiceJDBC();
 
         // Prepare clothes
-        Cloth cloth1 = new Cloth("T01","t-shirt","Company 1");
-        Cloth cloth2 = new Cloth("T02","t-shirt","Company 2");
-        Cloth cloth3 = new Cloth("T03","t-shirt","Company 3");
-        Cloth cloth4 = new Cloth("T04","hoodie","Company 4");
+        Cloth cloth1 = new Cloth("T01","2018-01-20",20.00,true);
+        Cloth cloth2 = new Cloth("T02","2018-02-20",25.00,true);
+        Cloth cloth3 = new Cloth("T03","2018-04-19",20.50,true);
+        Cloth cloth4 = new Cloth("T04","2018-03-19",30.00,false);
 
         // Create clothes list
         List<Cloth> clothes= new ArrayList<>();
@@ -35,8 +36,8 @@ public class Run {
         System.out.println("\n");
 
         // Show only hoodies
-        System.out.println("Lista bluz:");
-        clothService.showAllHoodies();
+        System.out.println("Lista wodoodpornych:");
+        clothService.showAllWaterproof();
         System.out.println("\n");
 
         System.out.println("Usuwam T03");
@@ -49,6 +50,6 @@ public class Run {
         System.out.println("\n");
 
         //Search for clothes from company
-        clothService.searchCompany("Company 4");
+        clothService.searchName("T01");
     }
 }

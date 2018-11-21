@@ -1,17 +1,40 @@
 package pl.spiascik.ug.app.domain;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Cloth {
 
-    private long id;
-
+    private int id;
     private String name;
-    private String type;
-    private String producer;
+    private Date productionDate;
+    private double price;
+    private boolean isWaterproof;
 
-    public Cloth(String name, String type, String producer) {
+
+    public Cloth(String name, String productionDateString, double price, boolean isWaterproof) {
+        java.sql.Date productionDate=null;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date date = dateFormat.parse(productionDateString);
+            productionDate = new java.sql.Date(date.getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         this.name = name;
-        this.type = type;
-        this.producer = producer;
+        this.productionDate = productionDate;
+        this.price = price;
+        this.isWaterproof = isWaterproof;
+    }
+
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -22,24 +45,32 @@ public class Cloth {
         this.name = name;
     }
 
-    public String getType() {
-        return type;
+    public Date getProductionDate() {
+        return productionDate;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setProductionDate(Date productionDate) {
+        this.productionDate = productionDate;
     }
 
-    public String getProducer() {
-        return producer;
+    public double getPrice() {
+        return price;
     }
 
-    public void setProducer(String producer) {
-        this.producer = producer;
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public boolean isWaterproof() {
+        return isWaterproof;
+    }
+
+    public void setWaterproof(boolean waterproof) {
+        isWaterproof = waterproof;
     }
 
     public String toString(){
-        return "Cloth: "+this.name+", typ: "+this.type+", producent: "+ this.producer;
+        return "Nazwa: "+this.name+", cena: "+this.price+", data produkcji: "+this.productionDate;
     }
 
 }
