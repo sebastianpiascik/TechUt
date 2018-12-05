@@ -1,9 +1,6 @@
 package pl.spiascik.ug.app.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Wearer {
@@ -13,6 +10,17 @@ public class Wearer {
     private long id;
     private String name;
     private int yob;
+
+    @ManyToOne
+    private Cloth cloth;
+
+    public Cloth getCloth() {
+        return cloth;
+    }
+
+    public void setCloth(Cloth cloth) {
+        this.cloth = cloth;
+    }
 
     public Wearer(long id, String name, int yob) {
         this.id = id;

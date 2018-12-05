@@ -3,7 +3,9 @@ package pl.spiascik.ug.app.domain;
 import javax.persistence.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Cloth {
@@ -16,15 +18,15 @@ public class Cloth {
     private double price;
     private boolean isWaterproof;
 
-    @ManyToOne
-    private Wearer wearer;
-
     @OneToMany
-    private Manufacturer manufacturer;
+    private List<Type> types = new ArrayList<Type>();
 
-    @ManyToMany
-    private Type type;
-
+    public List<Type> getTypes() {
+        return types;
+    }
+    public void setTypes(List<Type> types) {
+        this.types = types;
+    }
 
 
     public Cloth(String name, String productionDateString, double price, boolean isWaterproof) {
@@ -86,29 +88,6 @@ public class Cloth {
         isWaterproof = waterproof;
     }
 
-    public Wearer getWearer() {
-        return wearer;
-    }
-
-    public void setWearer(Wearer wearer) {
-        this.wearer = wearer;
-    }
-
-    public Manufacturer getManufacturer() {
-        return manufacturer;
-    }
-
-    public void setManufacturer(Manufacturer manufacturer) {
-        this.manufacturer = manufacturer;
-    }
-
-    public Type getType() {
-        return type;
-    }
-
-    public void setType(Type type) {
-        this.type = type;
-    }
 
 }
 

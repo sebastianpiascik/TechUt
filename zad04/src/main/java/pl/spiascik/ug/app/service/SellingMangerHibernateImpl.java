@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import pl.spiascik.ug.app.domain.Car;
 import pl.spiascik.ug.app.domain.Person;
+import pl.spiascik.ug.app.domain.Cloth;
 
 @Component
 @Transactional
@@ -31,6 +32,11 @@ public class SellingMangerHibernateImpl implements SellingManager {
 		person.setId(null);
 		sessionFactory.getCurrentSession().persist(person);
 	}
+
+	public void addCloth(Cloth cloth) {
+	    cloth.setId(null);
+
+    }
 	
 	@Override
 	public void deleteClient(Person person) {

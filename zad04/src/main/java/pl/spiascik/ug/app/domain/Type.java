@@ -1,9 +1,6 @@
 package pl.spiascik.ug.app.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Type {
@@ -12,7 +9,6 @@ public class Type {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
-
 
     public Type(long id, String name) {
         this.id = id;
