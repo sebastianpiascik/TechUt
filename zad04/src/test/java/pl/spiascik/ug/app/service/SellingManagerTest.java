@@ -47,9 +47,24 @@ public class SellingManagerTest {
 
     @Test
     public void deleteClothCheck(){
-	    Long id = (long) 2;
+	    Long id = (long) 1;
 	    Cloth retrievedCloth = sellingManager.findClothById(id);
 
-	    sellingManager.deleteCloth(retrievedCloth);
+	    if(retrievedCloth == null){
+            System.out.println("Nie znaleziono ubrania z id:"+id);
+            return;
+        } else{
+            sellingManager.deleteCloth(retrievedCloth);
+            System.out.println("Usunieto ubranie z id:"+id);
+        }
+
+    }
+
+    @Test
+    public void getAllClothesCheck(){
+	    List<Cloth> clothes = sellingManager.getAllClothes();
+	    for(Cloth c : clothes){
+            System.out.println(c.getId()+". "+c.getName());
+        }
     }
 }
