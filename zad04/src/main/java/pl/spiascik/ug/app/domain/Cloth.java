@@ -7,12 +7,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "cloth.all", query = "Select c from Cloth c"),
+        @NamedQuery(name = "cloth.byId", query = "Select c from Cloth c where c.id = :id")
+})
 public class Cloth {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     private String name;
     private Date productionDate;
     private double price;
@@ -48,11 +53,11 @@ public class Cloth {
         super();
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
