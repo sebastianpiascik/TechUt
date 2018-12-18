@@ -3,9 +3,9 @@ package pl.spiascik.ug.app.domain;
 import javax.persistence.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.sql.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
@@ -22,34 +22,29 @@ public class Cloth {
     private Date productionDate;
     private double price;
     private boolean isWaterproof;
+    @ManyToMany(mappedBy = "clothes")
+    private Set<Wearer> wearers = new HashSet<Wearer>();
+    @ManyToOne(cascade = {CascadeType.ALL})
+    private Type type;
 
-    @OneToMany
-    private List<Type> types = new ArrayList<Type>();
-
-    public List<Type> getTypes() {
-        return types;
-    }
-    public void setTypes(List<Type> types) {
-        this.types = types;
-    }
-
-
-    public Cloth(String name, String productionDateString, double price, boolean isWaterproof) {
-        java.sql.Date productionDate=null;
+    public Cloth(String name, String productionDate, double price, boolean isWaterproof, Type type) throws ParseException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        try {
-            Date date = dateFormat.parse(productionDateString);
-            productionDate = new java.sql.Date(date.getTime());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
         this.name = name;
-        this.productionDate = productionDate;
+        this.productionDate = new Date(dateFormat.parse(productionDate).getTime());
+        this.price = price;
+        this.isWaterproof = isWaterproof;
+        this.type = type;
+    }
+
+    public Cloth(String name, String productionDate, double price, boolean isWaterproof) throws ParseException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        this.name = name;
+        this.productionDate = new Date(dateFormat.parse(productionDate).getTime());
         this.price = price;
         this.isWaterproof = isWaterproof;
     }
 
-    public Cloth(){
+    public Cloth() {
         super();
     }
 
@@ -93,6 +88,29 @@ public class Cloth {
         isWaterproof = waterproof;
     }
 
+    public Set<Wearer> getWearers() {
+        return wearers;
+    }
+
+    public void setWearers(Set<Wearer> wearers) {
+        this.wearers = wearers;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    @Override
+    public String toString() {
+        return this.getId() + ". " + this.getName() +
+                ", data: " + this.getProductionDate().toString() +
+                ", cena: " + this.getPrice() +
+                ", wodoodporność: " + this.isWaterproof();
+    }
 
 }
 

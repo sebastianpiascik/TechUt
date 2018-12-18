@@ -4,7 +4,7 @@ import java.util.List;
 
 import pl.spiascik.ug.app.domain.Cloth;
 
-public interface SellingManager {
+public interface ClothesManager {
 
 	void addCloth(Cloth cloth);
 	List<Cloth> getAllClothes();

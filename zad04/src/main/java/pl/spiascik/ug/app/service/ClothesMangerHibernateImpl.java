@@ -1,6 +1,5 @@
 package pl.spiascik.ug.app.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
@@ -8,13 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import pl.spiascik.ug.app.domain.Car;
-import pl.spiascik.ug.app.domain.Person;
 import pl.spiascik.ug.app.domain.Cloth;
 
 @Component
 @Transactional
-public class SellingMangerHibernateImpl implements SellingManager {
+public class ClothesMangerHibernateImpl implements ClothesManager {
 
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -27,32 +24,25 @@ public class SellingMangerHibernateImpl implements SellingManager {
 		this.sessionFactory = sessionFactory;
 	}
 
-
-
     @Override
     public void addCloth(Cloth cloth) {
-        cloth.setId(null);
         sessionFactory.getCurrentSession().persist(cloth);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public List<Cloth> getAllClothes() {
-        return sessionFactory.getCurrentSession().getNamedQuery("cloth.all")
-                .list();
+        return sessionFactory.getCurrentSession().getNamedQuery("cloth.all").list();
     }
 
     @Override
     public void deleteCloth(Cloth cloth) {
-        cloth = (Cloth) sessionFactory.getCurrentSession().get(Cloth.class,
-                cloth.getId());
-
         sessionFactory.getCurrentSession().delete(cloth);
     }
 
     @Override
     public Cloth findClothById(Long id) {
-        return (Cloth) sessionFactory.getCurrentSession().get(Cloth.class, id);
+	    return (Cloth) sessionFactory.getCurrentSession().getNamedQuery("cloth.byId").setInteger("id",id.intValue()).uniqueResult();
     }
 
 }

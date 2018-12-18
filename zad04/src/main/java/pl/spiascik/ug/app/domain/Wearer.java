@@ -1,38 +1,40 @@
 package pl.spiascik.ug.app.domain;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Wearer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String name;
     private int yob;
 
-    @ManyToOne
-    private Cloth cloth;
+    @ManyToMany(cascade = { CascadeType.ALL })
+    @JoinTable(
+            name = "Wearer_Cloth",
+            joinColumns = { @JoinColumn(name = "wearer_id") },
+            inverseJoinColumns = { @JoinColumn(name = "cloth_id") }
+    )
+    Set<Cloth> clothes = new HashSet<Cloth>();
 
-    public Cloth getCloth() {
-        return cloth;
-    }
-
-    public void setCloth(Cloth cloth) {
-        this.cloth = cloth;
-    }
-
-    public Wearer(long id, String name, int yob) {
-        this.id = id;
+    public Wearer(String name, int yob) {
         this.name = name;
         this.yob = yob;
     }
 
-    public long getId() {
+    public Wearer(){
+        super();
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -50,5 +52,13 @@ public class Wearer {
 
     public void setYob(int yob) {
         this.yob = yob;
+    }
+
+    public Set<Cloth> getClothes() {
+        return clothes;
+    }
+
+    public void setClothes(Set<Cloth> clothes) {
+        this.clothes = clothes;
     }
 }
