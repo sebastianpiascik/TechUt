@@ -1,38 +1,38 @@
 package pl.spiascik.ug.app.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Wearer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String name;
     private int yob;
 
-    @ManyToOne
-    private Cloth cloth;
 
-    public Cloth getCloth() {
-        return cloth;
-    }
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "wearers", cascade = CascadeType.ALL)
+    @JsonIgnore
+    Set<Cloth> clothes = new HashSet<Cloth>();
 
-    public void setCloth(Cloth cloth) {
-        this.cloth = cloth;
-    }
-
-    public Wearer(long id, String name, int yob) {
-        this.id = id;
+    public Wearer(String name, int yob) {
         this.name = name;
         this.yob = yob;
     }
 
-    public long getId() {
+    public Wearer(){
+        super();
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -50,5 +50,13 @@ public class Wearer {
 
     public void setYob(int yob) {
         this.yob = yob;
+    }
+
+    public Set<Cloth> getClothes() {
+        return clothes;
+    }
+
+    public void setClothes(Set<Cloth> clothes) {
+        this.clothes = clothes;
     }
 }

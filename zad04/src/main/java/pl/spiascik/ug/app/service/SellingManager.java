@@ -8,6 +8,7 @@ public interface SellingManager {
 
 	void addCloth(Cloth cloth);
 	List<Cloth> getAllClothes();
+	List<Cloth> getWaterproofClothes();
 	void deleteCloth(Cloth cloth);
     Cloth findClothById(Long id);
 

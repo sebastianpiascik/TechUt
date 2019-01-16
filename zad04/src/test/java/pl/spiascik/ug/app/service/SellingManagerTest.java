@@ -14,6 +14,8 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import pl.spiascik.ug.app.domain.Cloth;
+import pl.spiascik.ug.app.domain.Type;
+import pl.spiascik.ug.app.domain.Wearer;
 import pl.spiascik.ug.app.service.SellingManager;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -37,12 +39,18 @@ public class SellingManagerTest {
 		}
 
 
-	    Cloth cloth = new Cloth();
-	    cloth.setName("Nazwa");
-	    cloth.setPrice(10.12);
-	    cloth.setProductionDate(new Date());
-	    cloth.setWaterproof(true);
+	    Cloth cloth = new Cloth("Nazwa", "2018-12-01", 12.00,false);
+
+
+        Type type1 = new Type("t-shirt");
+        Wearer wearer = new Wearer("Jan", 1990);
+        cloth.getWearers().add(wearer);
+        cloth.setType(type1);
+
 	    sellingManager.addCloth(cloth);
+        System.out.println("============");
+        System.out.println(cloth);
+        System.out.println("============");
     }
 
     @Test
@@ -63,8 +71,20 @@ public class SellingManagerTest {
     @Test
     public void getAllClothesCheck(){
 	    List<Cloth> clothes = sellingManager.getAllClothes();
+        System.out.println("============ All");
 	    for(Cloth c : clothes){
-            System.out.println(c.getId()+". "+c.getName());
+            System.out.println(c);
         }
+        System.out.println("============");
+    }
+
+    @Test
+    public void getWaterproofClothesCheck(){
+        List<Cloth> clothes = sellingManager.getWaterproofClothes();
+        System.out.println("============ Waterpoof");
+        for(Cloth c : clothes){
+            System.out.println(c);
+        }
+        System.out.println("============");
     }
 }

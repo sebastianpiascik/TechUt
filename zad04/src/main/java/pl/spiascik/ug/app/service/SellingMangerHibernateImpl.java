@@ -1,6 +1,5 @@
 package pl.spiascik.ug.app.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
@@ -8,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import pl.spiascik.ug.app.domain.Car;
-import pl.spiascik.ug.app.domain.Person;
 import pl.spiascik.ug.app.domain.Cloth;
 
 @Component
@@ -39,6 +36,12 @@ public class SellingMangerHibernateImpl implements SellingManager {
     @Override
     public List<Cloth> getAllClothes() {
         return sessionFactory.getCurrentSession().getNamedQuery("cloth.all")
+                .list();
+    }
+
+    @Override
+    public List<Cloth> getWaterproofClothes() {
+        return sessionFactory.getCurrentSession().getNamedQuery("cloth.waterproof")
                 .list();
     }
 

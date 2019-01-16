@@ -1,17 +1,20 @@
 package pl.spiascik.ug.app.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import javax.persistence.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.sql.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
 @NamedQueries({
         @NamedQuery(name = "cloth.all", query = "Select c from Cloth c"),
-        @NamedQuery(name = "cloth.byId", query = "Select c from Cloth c where c.id = :id")
+        @NamedQuery(name = "cloth.byId", query = "Select c from Cloth c where c.id = :id"),
+        @NamedQuery(name = "cloth.deleteAll", query="Delete from Cloth"),
+        @NamedQuery(name = "cloth.waterproof", query="Select c from Cloth c where c.isWaterproof = true")
 })
 public class Cloth {
 
@@ -22,34 +25,53 @@ public class Cloth {
     private Date productionDate;
     private double price;
     private boolean isWaterproof;
+    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "Wearer_Cloth",
+            joinColumns = { @JoinColumn(name = "wearer_id") },
+            inverseJoinColumns = { @JoinColumn(name = "cloth_id") }
+    )
+    private Set<Wearer> wearers = new HashSet<Wearer>();
+    @ManyToOne(cascade = {CascadeType.ALL})
+    private Type type;
 
-    @OneToMany
-    private List<Type> types = new ArrayList<Type>();
-
-    public List<Type> getTypes() {
-        return types;
-    }
-    public void setTypes(List<Type> types) {
-        this.types = types;
-    }
-
-
-    public Cloth(String name, String productionDateString, double price, boolean isWaterproof) {
-        java.sql.Date productionDate=null;
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        try {
-            Date date = dateFormat.parse(productionDateString);
-            productionDate = new java.sql.Date(date.getTime());
-        } catch (ParseException e) {
-            e.printStackTrace();
+    public Cloth(String name, String productionDate, double price, boolean isWaterproof, Type type){
+        try{
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            this.productionDate = new Date(dateFormat.parse(productionDate).getTime());
+        } catch (ParseException pe){
+            System.out.println(pe.getMessage());
         }
         this.name = name;
-        this.productionDate = productionDate;
+        this.price = price;
+        this.isWaterproof = isWaterproof;
+        this.type = type;
+    }
+
+    public Cloth(String name, String productionDate, double price, boolean isWaterproof){
+        try{
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            this.productionDate = new Date(dateFormat.parse(productionDate).getTime());
+        } catch (ParseException pe){
+            System.out.println(pe.getMessage());
+        }
+        this.name = name;
         this.price = price;
         this.isWaterproof = isWaterproof;
     }
 
-    public Cloth(){
+    public Cloth(String name, String productionDate, double price){
+        try{
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            this.productionDate = new Date(dateFormat.parse(productionDate).getTime());
+        } catch (ParseException pe){
+            System.out.println(pe.getMessage());
+        }
+        this.name = name;
+        this.price = price;
+    }
+
+    public Cloth() {
         super();
     }
 
@@ -93,6 +115,29 @@ public class Cloth {
         isWaterproof = waterproof;
     }
 
+    public Set<Wearer> getWearers() {
+        return wearers;
+    }
+
+    public void setWearers(Set<Wearer> wearers) {
+        this.wearers = wearers;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    @Override
+    public String toString() {
+        return this.getId() + ". " + this.getName() +
+                ", data: " + this.getProductionDate().toString() +
+                ", cena: " + this.getPrice() +
+                ", wodoodporność: " + this.isWaterproof();
+    }
 
 }
 
