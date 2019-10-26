@@ -1,3 +1,3 @@
-# Technologie utrwalania dla języka Java
+# Persistence technologies for Java
 
 > Sebastian Piaścik
